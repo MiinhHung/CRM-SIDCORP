@@ -1,83 +1,94 @@
-# QuanLyHTKH - Hệ Thống CRM & Nội Bộ (Internal Chat & CRM)
+# CRM-SIDCORP – Hệ Thống Quản Lý Khách Hàng & Làm Việc Nội Bộ
 
-QuanLyHTKH là một ứng dụng quản lý khách hàng (CRM) kết hợp hệ thống nhắn tin nội bộ thời gian thực. Dự án được thiết kế với kiến trúc hiện đại, phân tách dữ liệu linh hoạt và tối ưu chi phí vận hành cho các đội nhóm kinh doanh.
+Ứng dụng CRM cho đội kinh doanh: quản lý khách hàng và doanh nghiệp, theo dõi thương vụ, lên lịch công việc, lưu trữ tài liệu và trò chuyện nội bộ theo thời gian thực, tất cả trong một giao diện.
 
-## 🌟 Tính Năng Nổi Bật
+🔗 **Demo:** https://bd-sidcorp.vercel.app/
 
-### 1. Quản lý Khách Hàng (CRM)
-- Quản lý danh sách khách hàng, trạng thái (Lead, Deal, Lost, Win), nguồn khách và thông tin liên hệ.
-- **Timeline Tương Tác**: Ghi chú lại lịch sử làm việc với khách hàng. 
-- **Tagging / Mention**: Hỗ trợ gõ `@Tên_nhân_viên` để tag thành viên khác vào ghi chú, hệ thống sẽ tự động gửi thông báo real-time.
-- Quản lý file đính kèm/tài liệu liên quan đến khách hàng.
+![Dashboard CRM-SIDCORP](docs/screenshots/dashboard.png)
 
-### 2. Trò Chuyện Nội Bộ (Real-time Chat)
-- **Direct Message (1-1)**: Nhắn tin riêng tư giữa các thành viên trong nhóm.
-- **Diễn Đàn Nhóm (Forum)**: Kênh thảo luận chung cho tất cả thành viên.
-- Trạng thái hoạt động (Online/Offline) được cập nhật liên tục theo thời gian thực.
-- Nhận thông báo (Push Notification) tức thì khi có tin nhắn hoặc được nhắc tên.
+## 🌟 Tính Năng
 
-### 3. Hệ thống Phân Quyền (RBAC)
-- Xác thực bảo mật với JWT.
-- Phân quyền theo Role (`admin`, `user`).
-- Quản trị viên (Admin) có quyền duyệt tài khoản mới, quản lý mọi luồng dữ liệu của đội nhóm.
+### Quản lý khách hàng & kinh doanh
+- Dashboard tổng quan: khách hàng đang quản lý, doanh số tiềm năng, tỷ lệ chốt hợp đồng, doanh số theo tháng và theo lĩnh vực, xuất CSV.
+- Quản lý khách hàng cá nhân và doanh nghiệp B2B, trạng thái tư vấn (đã gửi báo giá, đã hủy…), nguồn khách, giá trị thương vụ.
+- Timeline tương tác và ghi chú theo từng khách hàng; gõ `@Tên_nhân_viên` để tag đồng nghiệp và gửi thông báo realtime.
 
-## 🛠 Công Nghệ Sử Dụng (Tech Stack)
+### Làm việc nhóm
+- **Công việc & Lịch làm việc**: tạo, giao việc, xem theo lịch, nhắc lịch họp tự động.
+- **Ghi chú** và **Tài liệu Drive**: lưu trữ, chia sẻ file đính kèm.
+- **Thảo luận & Chat**: nhắn tin 1-1 và kênh nhóm, trạng thái online/offline theo thời gian thực.
+- **Thông báo** realtime khi có tin nhắn, được nhắc tên hoặc được giao việc.
 
-Dự án áp dụng kiến trúc **Polyglot Persistence** (sử dụng nhiều loại CSDL cùng lúc) để tối ưu hóa hiệu năng:
+### Bảo mật & phân quyền
+- Xác thực JWT, mã hóa mật khẩu bằng bcrypt.
+- Phân quyền `admin` / `user`; admin duyệt tài khoản mới và quản lý dữ liệu của cả đội.
+- Helmet, rate limiting, CORS whitelist.
 
-**Frontend:**
-- React 19 + Vite + TypeScript.
-- Tailwind CSS & Material UI (MUI).
-- Socket.io-client (Real-time).
-- React-mentions (Xử lý tag tên nhân viên).
+### Giao diện
+- Thiết kế lại toàn bộ UI/UX theo phong cách tối giản, nhất quán giữa các trang.
+- Hỗ trợ chế độ sáng / tối, responsive.
+- Tối ưu hiệu năng: giảm render-blocking, preload ảnh LCP, chia nhỏ bundle.
 
-**Backend:**
-- Node.js + Express + TypeScript.
-- Socket.io (Xử lý kết nối thời gian thực).
-- JWT & Bcryptjs (Xác thực và bảo mật).
-- Multer (Xử lý file upload).
+## 🛠 Công Nghệ
 
-**Cơ sở dữ liệu & Lưu trữ (Databases & Storage):**
-- **PostgreSQL (Supabase + Prisma)**: Lưu trữ dữ liệu cấu trúc chuẩn (Users, Customers, Roles).
-- **MongoDB Atlas (Mongoose)**: Lưu trữ luồng dữ liệu linh hoạt không giới hạn (Lịch sử Chat, Ghi chú khách hàng, Thông báo).
-- **Supabase Storage**: Quản lý và lưu trữ file đính kèm.
+| Phần | Công nghệ |
+|---|---|
+| Frontend | React 19, TypeScript, Vite, Tailwind CSS, React Query, Zustand, React Router, Socket.io-client |
+| Backend | Node.js, Express, TypeScript, Socket.io, Zod, JWT, Multer |
+| Database | PostgreSQL (Supabase + Prisma), MongoDB Atlas (Mongoose) |
+| Lưu trữ & hạ tầng | Supabase Storage, Redis (tùy chọn, để scale nhiều instance), Vercel |
 
-## 🚀 Hướng Dẫn Cài Đặt
+Dự án dùng kiến trúc **Polyglot Persistence**:
+- **PostgreSQL (Supabase + Prisma)**: dữ liệu có cấu trúc – người dùng, khách hàng, doanh nghiệp, công việc, phân quyền.
+- **MongoDB Atlas (Mongoose)**: dữ liệu linh hoạt, tăng nhanh – lịch sử chat, ghi chú, thông báo.
+- **Supabase Storage**: file đính kèm và tài liệu.
 
-### Yêu cầu hệ thống
-- Node.js phiên bản `v22.15.0` (Khuyên dùng [nvm](https://github.com/nvm-sh/nvm)).
+## 👥 Thành Viên & Vai Trò
 
-### Chạy dự án ở chế độ Development
+Dự án nhóm. Các thành viên: [@MiinhHung](https://github.com/MiinhHung), [@Lebao1234](https://github.com/Lebao1234), [@MatthewLK13](https://github.com/MatthewLK13).
 
-**1. Khởi chạy Backend:**
-Mở terminal và trỏ vào thư mục `backend`:
+**Nguyễn Minh Hùng ([@MiinhHung](https://github.com/MiinhHung))**
+- Thiết kế và xây dựng giao diện UI/UX cho toàn bộ hệ thống (dashboard, khách hàng, công việc, lịch, chat, cài đặt…).
+- Thiết lập và kết nối cơ sở dữ liệu: PostgreSQL trên Supabase qua Prisma, MongoDB Atlas qua Mongoose, Supabase Storage.
+- Áp dụng quy trình phát triển có AI hỗ trợ: Claude Code kết hợp skill tùy chỉnh (`SKILL.md`) và MCP Playwright để tự động kiểm thử, rà soát giao diện trên trình duyệt thật.
+
+## 🚀 Cài Đặt
+
+### Yêu cầu
+- Node.js `v22.15.0` (khuyên dùng [nvm](https://github.com/nvm-sh/nvm)).
+- Tài khoản Supabase và MongoDB Atlas (miễn phí) – xem [DATABASE_SETUP.md](./DATABASE_SETUP.md).
+
+### Biến môi trường
+Sao chép file mẫu rồi điền giá trị thật:
+```bash
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+```
+
+### Chạy ở chế độ Development
+
+**Backend**
 ```bash
 cd backend
 npm install
 npm run prisma:generate  # Khởi tạo Prisma Client
 npm run prisma:migrate   # Đồng bộ bảng dữ liệu vào PostgreSQL
-npm run dev              # Chạy server ở http://localhost:5000
+npm run dev              # http://localhost:5000
 ```
 
-**2. Khởi chạy Frontend:**
-Mở thêm một terminal mới và trỏ vào thư mục `frontend`:
+**Frontend** (terminal khác)
 ```bash
 cd frontend
 npm install
-npm run dev              # Chạy web ở http://localhost:5173
+npm run dev              # http://localhost:5173
 ```
 
-### Chế độ Production (Build)
-
-Để build ứng dụng đưa lên server thật:
+### Build Production
 ```bash
-# Build Backend
+# Backend
 cd backend && npm install && npm run prisma:generate && npm run build
 npm start
 
-# Build Frontend
+# Frontend
 cd ../frontend && npm install && npm run build
 ```
-
-## 📚 Tài liệu tham khảo
-- Vui lòng xem [DATABASE_SETUP.md](./DATABASE_SETUP.md) để biết cách thiết lập tài khoản miễn phí cho MongoDB Atlas và Supabase.
